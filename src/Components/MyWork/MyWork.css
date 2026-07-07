@@ -1,0 +1,137 @@
+.mywork {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 30px 0 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mywork-title {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.mywork-title h1 {
+  font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+  font-weight: 700;
+  max-width: 720px;
+}
+
+.mywork-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.work-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.work-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.work-card-content {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.work-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.work-card-top h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.work-card-top span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #7dd3fc;
+}
+
+.work-card-content p {
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.work-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.work-techs span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 0.8rem;
+  color: #f8fafc;
+}
+
+.work-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.work-actions a {
+  text-decoration: none;
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: white;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(34, 211, 238, 0.15));
+}
+
+.mywork-showmore {
+  align-self: center;
+  text-decoration: none;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.2s ease;
+}
+
+.mywork-showmore:hover {
+  transform: translateY(-2px);
+}
+
+@media screen and (max-width: 860px) {
+  .mywork-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .mywork {
+    width: min(100%, calc(100% - 24px));
+    padding: 20px 0 70px;
+  }
+
+  .mywork-container {
+    grid-template-columns: 1fr;
+  }
+}
