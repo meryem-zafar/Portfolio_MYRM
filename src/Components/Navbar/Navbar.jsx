@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link as ScrollLink } from 'react-scroll';
 import { FiMenu, FiX } from 'react-icons/fi';
 import './Navbar.css';
-import logo from '../../assets/lom.png';
+// Removed image logo import
+
 
 const sections = [
   { id: 'home', label: 'Home' },
@@ -43,15 +44,23 @@ const Navbar = () => {
 
   return (
     <nav className={`Navbar ${scrolled ? 'scrolled' : ''}`}>
-      <img
-        src={logo}
-        alt="Maryam Zafar logo"
-        className="navbar-logo"
+      {/* Custom Brand Logo */}
+      <div
+        className="flex items-center gap-2 cursor-pointer transition-transform duration-250 hover:scale-104 select-none"
         onClick={() => {
           setMobileMenuOpen(false);
           document.getElementById('home')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }}
-      />
+      >
+        <div className="w-8 h-8 rounded-full border border-purple-500/50 flex items-center justify-center bg-purple-500/10 shadow-md shadow-purple-500/20 relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-cyan-500 opacity-20 group-hover:opacity-60 transition-opacity duration-300" />
+          <div className="w-5 h-5 rounded-full border border-cyan-400/80 flex items-center justify-center">
+            <span className="text-[8px] text-cyan-400 font-extrabold tracking-tighter">MZ</span>
+          </div>
+        </div>
+        <span className="text-lg font-black tracking-widest text-white">MZ</span>
+      </div>
+
 
       <ul className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`}>
         {sections.map((item) => (

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from 'react-icons/fa';
 import { portfolioOwner } from '../../assets/portfolio_data';
@@ -22,7 +22,7 @@ const Particle = ({ x, y, delay }) => {
 
 const Hero = () => {
   const containerRef = useRef(null);
-  const titleRef = useRef(null);
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
 
   useEffect(() => {
     // Parallax effect
@@ -45,13 +45,24 @@ const Hero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const roles = [
-    'AI Engineer',
-    'Agentic AI Developer',
-    'Flutter Developer',
-    'Web Developer',
-    'Game Developer',
-  ];
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentRoleIndex((prev) => (prev + 1) % portfolioOwner.roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const particles = useMemo(() => {
+    // Generate static particle coords once to prevent jumping on re-renders
+    const width = typeof window !== 'undefined' ? window.innerWidth : 1920;
+    const height = typeof window !== 'undefined' ? window.innerHeight : 1080;
+    return Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * width,
+      y: Math.random() * height,
+      delay: i * 0.1,
+    }));
+  }, []);
 
   const container = {
     hidden: { opacity: 0 },
@@ -75,18 +86,19 @@ const Hero = () => {
 
   return (
     <section
+      id="home"
       ref={containerRef}
       className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-20 perspective"
       style={{ perspective: '1200px' }}
     >
       {/* Animated Background Particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {Array.from({ length: 30 }).map((_, i) => (
+        {particles.map((p) => (
           <Particle
-            key={i}
-            x={Math.random() * window.innerWidth}
-            y={Math.random() * window.innerHeight}
-            delay={i * 0.1}
+            key={p.id}
+            x={p.x}
+            y={p.y}
+            delay={p.delay}
           />
         ))}
       </div>
@@ -139,15 +151,19 @@ const Hero = () => {
 
         {/* Animated Role Switcher */}
         <motion.div variants={item} className="mb-8 h-16 flex items-center justify-center">
-          <div className="text-3xl font-semibold">
-            <motion.span
-              key="role-text"
-              className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400"
-              animate={{ opacity: [1, 0.5, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              {roles[0]}
-            </motion.span>
+          <div className="text-2xl sm:text-3xl font-semibold relative h-10 w-full overflow-hidden flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={currentRoleIndex}
+                className="absolute text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 px-4 whitespace-nowrap"
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -30, opacity: 0 }}
+                transition={{ duration: 0.5, ease: 'easeInOut' }}
+              >
+                {portfolioOwner.roles[currentRoleIndex]}
+              </motion.span>
+            </AnimatePresence>
           </div>
         </motion.div>
 

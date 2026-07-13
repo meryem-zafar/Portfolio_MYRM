@@ -9,6 +9,8 @@ import EducationSection from './Components/EducationSection/EducationSection';
 import AchievementsSection from './Components/AchievementsSection/AchievementsSection';
 import Contact from './Components/Contacct/Contact';
 import Footer from './Components/Footer/Footer';
+import AIChatbot from './Components/AIChatbot/AIChatbot';
+
 
 const App = () => {
   useEffect(() => {
@@ -46,7 +48,9 @@ const App = () => {
       <AchievementsSection />
       <Contact />
       <Footer />
+      <AIChatbot />
     </div>
+
   );
 };
 
